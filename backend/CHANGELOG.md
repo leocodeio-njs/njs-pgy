@@ -1,3 +1,10 @@
+# 1.0.0 (2025-03-26)
+
+
+### Features
+
+* **sr start:** new codebase have to rewrite ([5b48770](https://github.com/leocodeio-njs/njs-pgy/commit/5b48770624f44f454b366a8cefc564315c372d2e))
+
 ## [1.0.2](https://github-work/NAPL-Everest/inbox/compare/v1.0.1...v1.0.2) (2025-03-01)
 
 ## [1.0.1](https://github-work/NAPL-Everest/inbox/compare/v1.0.0...v1.0.1) (2025-02-24)
