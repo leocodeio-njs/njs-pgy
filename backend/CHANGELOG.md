@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.0.0...v1.1.0) (2025-03-26)
+
+
+### Features
+
+* **revisit pgy:** \pgy updated ([2be85f5](https://github.com/leocodeio-njs/njs-pgy/commit/2be85f5e780aa1ee84082b8fc1d07d61bfce6f82))
+
 ## [1.0.1](https://github-work/NAPL-Everest/pgy/compare/v1.0.0...v1.0.1) (2025-03-03)
 
 
