@@ -1,6 +1,6 @@
 {
   "name": "pgy-api",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "",
   "author": "",
   "private": true,
@@ -43,6 +43,7 @@
     "@semantic-release/git": "^10.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "commitlint": "^19.8.0",
     "express-basic-auth": "^1.2.1",
     "pg": "^8.13.1",
     "prom-client": "^15.1.3",
