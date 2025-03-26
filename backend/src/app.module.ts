@@ -17,6 +17,7 @@ import { OrdersModule } from './modules/orders/orders.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { CustomersModule } from './modules/customers/customers.module';
+import { LogEntry } from '@leocodeio-njs/njs-logging/dist/logging/entities/log-entry.entity';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { CustomersModule } from './modules/customers/customers.module';
       imports: [AppConfigModule],
       useFactory: (configService: AppConfigService) => ({
         ...configService.databaseConfig,
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        entities: [__dirname + '/**/*.entity{.ts,.js}', LogEntry],
         synchronize: true,
         ssl: false,
       }),
