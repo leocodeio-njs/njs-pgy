@@ -5,7 +5,6 @@ import {
   Put,
   Body,
   Param,
-  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -17,16 +16,10 @@ import {
 import { CustomersService } from '../../application/services/customers.service';
 import { CreateCustomerDto } from '../../application/dtos/create-customer.dto';
 import { UpdateCustomerDto } from '../../application/dtos/update-customer.dto';
-import {
-  AccessTokenAuthGuard,
-  ApiKeyGuard,
-} from '@leocodeio-njs/njs-auth';
 
 @ApiTags('Customers')
 @ApiSecurity('x-api-key')
-@ApiBearerAuth('Authorization')
-@UseGuards(AccessTokenAuthGuard)
-@UseGuards(ApiKeyGuard)
+@ApiBearerAuth()
 @Controller('customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}

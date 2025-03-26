@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -8,15 +8,10 @@ import {
 } from '@nestjs/swagger';
 import { OrdersService } from '../../application/services/orders.service';
 import { CreateOrderDto } from '../../application/dtos/create-order.dto';
-import {
-  AccessTokenAuthGuard,
-  ApiKeyGuard,
-} from '@leocodeio-njs/njs-auth';
+
 @ApiTags('Orders')
 @ApiSecurity('x-api-key')
-@ApiBearerAuth('Authorization')
-@UseGuards(AccessTokenAuthGuard)
-@UseGuards(ApiKeyGuard)
+@ApiBearerAuth()
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}

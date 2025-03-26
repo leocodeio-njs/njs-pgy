@@ -31,6 +31,7 @@ import { CustomersModule } from './modules/customers/customers.module';
         ...configService.databaseConfig,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
+        ssl: false,
       }),
       inject: [AppConfigService],
     }),
@@ -48,10 +49,10 @@ import { CustomersModule } from './modules/customers/customers.module';
       provide: APP_GUARD,
       useClass: ApiKeyGuard,
     },
-    {
-      provide: APP_GUARD,
-      useClass: AccessTokenAuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AccessTokenAuthGuard,
+    // },
     AppService,
   ],
   controllers: [AppController],

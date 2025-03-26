@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -9,16 +9,10 @@ import {
 import { PaymentsService } from '../../application/services/payments.service';
 import { VerifyPaymentDto } from '../../application/dtos/verify-payment.dto';
 import { VerifySubscriptionPaymentDto } from '../../application/dtos/verify-subscription-dto';
-import {
-  AccessTokenAuthGuard,
-  ApiKeyGuard,
-} from '@leocodeio-njs/njs-auth';
 
 @ApiTags('Payments')
 @ApiSecurity('x-api-key')
-@ApiBearerAuth('Authorization')
-@UseGuards(AccessTokenAuthGuard)
-@UseGuards(ApiKeyGuard)
+@ApiBearerAuth()
 @Controller('payments')
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}

@@ -14,9 +14,7 @@ import {
 } from '@leocodeio-njs/njs-auth';
 @ApiTags('Subscriptions')
 @ApiSecurity('x-api-key')
-@ApiBearerAuth('Authorization')
-@UseGuards(AccessTokenAuthGuard)
-@UseGuards(ApiKeyGuard)
+@ApiBearerAuth()
 @Controller('subscriptions')
 export class SubscriptionsController {
   constructor(private readonly subscriptionsService: SubscriptionsService) {}
