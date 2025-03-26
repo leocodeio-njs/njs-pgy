@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/leocodeio-njs/njs-pgy/compare/v1.1.2...v1.1.3) (2025-03-26)
+
+
+### Bug Fixes
+
+* **logentry:** logentry(should add code to send loggin package too) ([1d73871](https://github.com/leocodeio-njs/njs-pgy/commit/1d738712047bc91b2b19ef1be5ef7a36b00f169c))
+
 ## [1.1.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.1.1...v1.1.2) (2025-03-26)
 
 ## [1.1.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.1.0...v1.1.1) (2025-03-26)
