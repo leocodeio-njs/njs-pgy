@@ -1,6 +1,6 @@
-# tb-nm
+# tb-pgy
 
-Inbox -> API Service
+Payment Gateway -> API Service
 
 ## Contributing
 

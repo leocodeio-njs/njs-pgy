@@ -16,8 +16,10 @@ import { LoggingModule } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
 import { APP_GUARD } from '@nestjs/core';
 import { ApiKeyGuard } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
 import { AuthModule } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
-import { DiscussionModule } from './discusssion/discussion.module';
-import { MessageModule } from './message/message.module';
+import { OrdersModule } from './modules/orders/orders.module';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
+import { CustomersModule } from './modules/customers/customers.module';
 
 @Module({
   imports: [
@@ -35,8 +37,10 @@ import { MessageModule } from './message/message.module';
       }),
       inject: [AppConfigService],
     }),
-    DiscussionModule,
-    MessageModule,
+    CustomersModule,
+    SubscriptionsModule,
+    PaymentsModule,
+    OrdersModule,
   ],
   providers: [
     {

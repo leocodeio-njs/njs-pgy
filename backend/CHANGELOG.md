@@ -1,18 +1,14 @@
-# 1.0.0 (2025-03-26)
+## [1.0.1](https://github-work/NAPL-Everest/pgy/compare/v1.0.0...v1.0.1) (2025-03-03)
 
 
-### Features
+### Performance Improvements
 
-* **sr start:** new codebase have to rewrite ([5b48770](https://github.com/leocodeio-njs/njs-pgy/commit/5b48770624f44f454b366a8cefc564315c372d2e))
-
-## [1.0.2](https://github-work/NAPL-Everest/inbox/compare/v1.0.1...v1.0.2) (2025-03-01)
-
-## [1.0.1](https://github-work/NAPL-Everest/inbox/compare/v1.0.0...v1.0.1) (2025-02-24)
+* **auth:** added code for efficition useage of new common module's auth module ([2540fa0](https://github-work/NAPL-Everest/pgy/commit/2540fa00820b09beb4a07c6269f07bdc5b30c28d))
 
 # 1.0.0 (2025-02-24)
 
 
 ### Features
 
-* **package.json:** refractor codebase to new structure ([a21a496](https://github-work/NAPL-Everest/inbox/commit/a21a4968df70572822755d90df89783af232f1d5))
-* **Semantic release implemented:** Semantic release implemented ([7893852](https://github-work/NAPL-Everest/inbox/commit/7893852d256219164653a2a1d6f51546e0dc3708))
+* **package.json:** updated codebase with new file strucutre ([b58d70c](https://github-work/NAPL-Everest/pgy/commit/b58d70c166a92e01b2c9ff8943b260292f338450))
+* **semantic release implemented:** semantic release implemented ([fd0de4b](https://github-work/NAPL-Everest/pgy/commit/fd0de4b55a78c1cc6f8550c27dc22a91dcab4390))
