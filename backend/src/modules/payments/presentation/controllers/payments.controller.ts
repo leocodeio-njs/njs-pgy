@@ -12,7 +12,7 @@ import { VerifySubscriptionPaymentDto } from '../../application/dtos/verify-subs
 import {
   AccessTokenAuthGuard,
   ApiKeyGuard,
-} from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+} from '@leocodeio-njs/njs-auth';
 
 @ApiTags('Payments')
 @ApiSecurity('x-api-key')

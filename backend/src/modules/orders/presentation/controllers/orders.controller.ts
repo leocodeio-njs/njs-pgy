@@ -11,7 +11,7 @@ import { CreateOrderDto } from '../../application/dtos/create-order.dto';
 import {
   AccessTokenAuthGuard,
   ApiKeyGuard,
-} from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+} from '@leocodeio-njs/njs-auth';
 @ApiTags('Orders')
 @ApiSecurity('x-api-key')
 @ApiBearerAuth('Authorization')

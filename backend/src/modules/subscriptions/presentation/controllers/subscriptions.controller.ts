@@ -11,7 +11,7 @@ import { CreateSubscriptionDto } from '../../application/dtos/create-subscriptio
 import {
   AccessTokenAuthGuard,
   ApiKeyGuard,
-} from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+} from '@leocodeio-njs/njs-auth';
 @ApiTags('Subscriptions')
 @ApiSecurity('x-api-key')
 @ApiBearerAuth('Authorization')

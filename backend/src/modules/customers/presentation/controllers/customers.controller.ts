@@ -20,7 +20,7 @@ import { UpdateCustomerDto } from '../../application/dtos/update-customer.dto';
 import {
   AccessTokenAuthGuard,
   ApiKeyGuard,
-} from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+} from '@leocodeio-njs/njs-auth';
 
 @ApiTags('Customers')
 @ApiSecurity('x-api-key')

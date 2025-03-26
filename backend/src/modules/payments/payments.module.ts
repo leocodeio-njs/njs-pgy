@@ -3,7 +3,7 @@ import { PaymentsController } from './presentation/controllers/payments.controll
 import { PaymentsService } from './application/services/payments.service';
 import { RazorpayService } from '../../common/services/razorpay.service';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+import { AuthModule } from '@leocodeio-njs/njs-auth';
 
 @Module({
   imports: [ConfigModule, AuthModule],

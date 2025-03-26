@@ -1,29 +1,29 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { ResponseInterceptor } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
 import { AppModule } from './app.module';
-import { BootstrapConfig } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
-
+import { ConfigService } from '@nestjs/config';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const bootstrapConfig = new BootstrapConfig();
-
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  app.useGlobalInterceptors(new ResponseInterceptor());
-
+  app.useGlobalPipes(new ValidationPipe());
   app.enableVersioning({
     type: VersioningType.URI,
     defaultVersion: configService.get('API_VERSION'),
     prefix: 'v',
   });
 
-  bootstrapConfig.setupHelmet(app);
-  // bootstrapConfig.setupCors(app);
-  bootstrapConfig.setupSwagger(app);
-
-  console.log('application running on port', configService.get('PORT'));
-  await app.listen(configService.get('PORT'));
+  const config = new DocumentBuilder()
+    .setTitle(configService.get('APP_NAME'))
+    .setDescription('Product API')
+    .setVersion('1.0')
+    .addTag('Products API')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+  const port = configService.get('PORT') || 3000;
+  console.log(`product-and-pricing-api server is running on port ${port}`);
+  await app.listen(port);
 }
+
 bootstrap();

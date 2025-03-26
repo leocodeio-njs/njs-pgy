@@ -2,20 +2,17 @@ import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {
-  AccessTokenAuthGuard,
-  HealthModule,
-  LogEntry,
-} from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+import { AccessTokenAuthGuard } from '@leocodeio-njs/njs-auth';
+import { HealthModule } from '@leocodeio-njs/njs-health-db';
 import { CqrsModule } from '@nestjs/cqrs';
-import { LoggingInterceptor } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+import { LoggingInterceptor } from '@leocodeio-njs/njs-logging';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { AppConfigModule } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
-import { AppConfigService } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
-import { LoggingModule } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+import { AppConfigModule } from '@leocodeio-njs/njs-config';
+import { AppConfigService } from '@leocodeio-njs/njs-config';
+import { LoggingModule } from '@leocodeio-njs/njs-logging';
 import { APP_GUARD } from '@nestjs/core';
-import { ApiKeyGuard } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
-import { AuthModule } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+import { ApiKeyGuard } from '@leocodeio-njs/njs-auth';
+import { AuthModule } from '@leocodeio-njs/njs-auth';
 import { OrdersModule } from './modules/orders/orders.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
@@ -32,7 +29,7 @@ import { CustomersModule } from './modules/customers/customers.module';
       imports: [AppConfigModule],
       useFactory: (configService: AppConfigService) => ({
         ...configService.databaseConfig,
-        entities: [__dirname + '/**/*.entity{.ts,.js}', LogEntry],
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
       }),
       inject: [AppConfigService],

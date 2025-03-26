@@ -3,7 +3,7 @@ import { SubscriptionsController } from './presentation/controllers/subscription
 import { SubscriptionsService } from './application/services/subscriptions.service';
 import { RazorpayService } from '../../common/services/razorpay.service';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from '@Netlabs-Australia-Pty-Ltd/netlabs-njs-common';
+import { AuthModule } from '@leocodeio-njs/njs-auth';
 
 @Module({
   imports: [ConfigModule, AuthModule],
