@@ -1,0 +1,13 @@
+{
+  "name": "inbox-api",
+  "devDependencies": {
+    "husky": "^8.0.0"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "commit": "cd backend && pnpm commit"
+  },
+  "dependencies": {
+    "commitizen": "^4.3.1"
+  }
+}
