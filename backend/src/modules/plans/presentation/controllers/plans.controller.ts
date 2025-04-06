@@ -18,8 +18,8 @@ import { PlansService } from '../../application/services/plans.service';
 import { CreatePlanDto } from '../../application/dtos/create-plan.dto';
 
 @ApiTags('Plans')
-@ApiSecurity('x-api-key')
-@ApiBearerAuth()
+// @ApiSecurity('x-api-key')
+// @ApiBearerAuth()
 @Controller('plans')
 export class PlansController {
   constructor(private readonly plansService: PlansService) {}

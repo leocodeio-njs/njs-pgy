@@ -10,8 +10,8 @@ import { OrdersService } from '../../application/services/orders.service';
 import { CreateOrderDto } from '../../application/dtos/create-order.dto';
 
 @ApiTags('Orders')
-@ApiSecurity('x-api-key')
-@ApiBearerAuth()
+// @ApiSecurity('x-api-key')
+// @ApiBearerAuth()
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}

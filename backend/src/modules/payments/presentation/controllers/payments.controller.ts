@@ -11,8 +11,8 @@ import { VerifyPaymentDto } from '../../application/dtos/verify-payment.dto';
 import { VerifySubscriptionPaymentDto } from '../../application/dtos/verify-subscription-dto';
 
 @ApiTags('Payments')
-@ApiSecurity('x-api-key')
-@ApiBearerAuth()
+// @ApiSecurity('x-api-key')
+// @ApiBearerAuth()
 @Controller('payments')
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}

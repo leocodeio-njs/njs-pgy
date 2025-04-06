@@ -18,8 +18,8 @@ import { CreateCustomerDto } from '../../application/dtos/create-customer.dto';
 import { UpdateCustomerDto } from '../../application/dtos/update-customer.dto';
 
 @ApiTags('Customers')
-@ApiSecurity('x-api-key')
-@ApiBearerAuth()
+// @ApiSecurity('x-api-key')
+// @ApiBearerAuth()
 @Controller('customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}

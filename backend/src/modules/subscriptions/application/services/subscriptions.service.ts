@@ -8,7 +8,8 @@ export class SubscriptionsService {
 
   async createSubscription(subscriptionData: CreateSubscriptionDto) {
     try {
-      const subscription = this.razorpayService.razorpay.subscriptions.create(subscriptionData);
+      const subscription =
+        this.razorpayService.razorpay.subscriptions.create(subscriptionData);
       return subscription;
     } catch (error) {
       throw new HttpException(
@@ -18,9 +19,14 @@ export class SubscriptionsService {
     }
   }
 
-  async getSubscription(subscriptionId: string) {
+  async getSubscription(subscriptionId?: string) {
     try {
-      return await this.razorpayService.razorpay.subscriptions.fetch(subscriptionId);
+      if (!subscriptionId) {
+        return await this.razorpayService.razorpay.subscriptions.all();
+      }
+      return await this.razorpayService.razorpay.subscriptions.fetch(
+        subscriptionId,
+      );
     } catch (error) {
       throw new HttpException(
         error.error?.description || 'Error fetching subscription',

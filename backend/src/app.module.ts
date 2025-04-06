@@ -60,10 +60,10 @@ import { ItemsModule } from './modules/items/items.module';
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
     },
-    {
-      provide: APP_GUARD,
-      useClass: ApiKeyGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: ApiKeyGuard,
+    // },
     // {
     //   provide: APP_GUARD,
     //   useClass: AccessTokenAuthGuard,
