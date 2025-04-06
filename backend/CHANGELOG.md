@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.1.3...v1.2.0) (2025-04-06)
+
+
+### Features
+
+* **revist:** plans and subscriptions added ([63fd828](https://github.com/leocodeio-njs/njs-pgy/commit/63fd82832faed3f44797d6397a46aa161d115626))
+
 ## [1.1.3](https://github.com/leocodeio-njs/njs-pgy/compare/v1.1.2...v1.1.3) (2025-03-26)
 
 
