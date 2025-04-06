@@ -36,14 +36,14 @@ export class CustomersController {
   @ApiOperation({ summary: 'Get all customers' })
   @ApiResponse({ status: 200, description: 'Returns all customers' })
   async getAllCustomers() {
-    return this.customersService.getAllCustomers();
+    return this.customersService.getCustomers();
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get customer by ID' })
   @ApiResponse({ status: 200, description: 'Returns customer details' })
   async getCustomerById(@Param('id') id: string) {
-    return this.customersService.getCustomerById(id);
+    return this.customersService.getCustomers(id);
   }
 
   @Put(':id')

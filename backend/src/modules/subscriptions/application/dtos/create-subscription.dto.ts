@@ -11,24 +11,7 @@ export class CreateSubscriptionDto {
   @IsNumber()
   total_count: number;
 
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  quantity: number;
-
-  @ApiProperty({ example: 1893456000 })
-  @IsNumber()
-  start_at: number;
-
-  @ApiProperty({ example: 1893457000 })
-  @IsNumber()
-  expire_by: number;
-
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  customer_notify: boolean | 1 | 0;
-
-  @ApiProperty({ required: false, type: Object })
-  @IsOptional()
-  @IsObject()
-  notes?: IObject<any>;
+  @ApiProperty({ example: 'cust_QFQJWwHlLudxtF' })
+  @IsString()
+  customer_id: string;
 }

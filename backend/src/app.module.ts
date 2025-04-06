@@ -2,25 +2,37 @@ import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AccessTokenAuthGuard } from '@leocodeio-njs/njs-auth';
 import { HealthModule } from '@leocodeio-njs/njs-health-db';
 import { CqrsModule } from '@nestjs/cqrs';
 import { LoggingInterceptor } from '@leocodeio-njs/njs-logging';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AppConfigModule } from '@leocodeio-njs/njs-config';
 import { AppConfigService } from '@leocodeio-njs/njs-config';
+import { ConfigModule } from '@nestjs/config';
+
+// Logging
 import { LoggingModule } from '@leocodeio-njs/njs-logging';
-import { APP_GUARD } from '@nestjs/core';
-import { ApiKeyGuard } from '@leocodeio-njs/njs-auth';
+import { LogEntry } from '@leocodeio-njs/njs-logging/dist/logging/entities/log-entry.entity';
+
+// Auth
 import { AuthModule } from '@leocodeio-njs/njs-auth';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenAuthGuard } from '@leocodeio-njs/njs-auth';
+import { ApiKeyGuard } from '@leocodeio-njs/njs-auth';
+
+// Modules
+import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { PaymentsModule } from './modules/payments/payments.module';
-import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { CustomersModule } from './modules/customers/customers.module';
-import { LogEntry } from '@leocodeio-njs/njs-logging/dist/logging/entities/log-entry.entity';
+import { PlansModule } from './modules/plans/plans.module';
+import { ItemsModule } from './modules/items/items.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     AppConfigModule,
     LoggingModule.forRoot({}),
     AuthModule,
@@ -37,7 +49,9 @@ import { LogEntry } from '@leocodeio-njs/njs-logging/dist/logging/entities/log-e
       inject: [AppConfigService],
     }),
     CustomersModule,
+    PlansModule,
     SubscriptionsModule,
+    ItemsModule,
     PaymentsModule,
     OrdersModule,
   ],

@@ -31,17 +31,11 @@ export class CustomersService {
     }
   }
 
-  async getAllCustomers() {
+  async getCustomers(customerId?: string) {
     try {
-      const customers = await this.razorpayService.razorpay.customers.all();
-      return customers;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getCustomerById(customerId: string) {
-    try {
+      if (!customerId) {
+        return await this.razorpayService.razorpay.customers.all();
+      }
       const customer =
         await this.razorpayService.razorpay.customers.fetch(customerId);
       return customer;
