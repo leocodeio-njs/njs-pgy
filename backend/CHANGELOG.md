@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.2.3...v1.3.0) (2025-04-07)
+
+
+### Features
+
+* **first commit:** first commit ([cfad9a2](https://github.com/leocodeio-njs/njs-pgy/commit/cfad9a2ec396e5d1adf9d13da3890d53781ea097))
+
 ## [1.2.3](https://github.com/leocodeio-njs/njs-pgy/compare/v1.2.2...v1.2.3) (2025-04-07)
 
 ## [1.2.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.2.1...v1.2.2) (2025-04-06)
