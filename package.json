@@ -1,13 +1,10 @@
 {
-  "name": "inbox-api",
+  "name": "pgy-api",
   "devDependencies": {
     "husky": "^8.0.3"
   },
   "scripts": {
     "prepare": "husky install",
     "commit": "cd backend && pnpm commit"
-  },
-  "dependencies": {
-    "commitizen": "^4.3.1"
   }
 }
