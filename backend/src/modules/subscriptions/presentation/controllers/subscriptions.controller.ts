@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  UseGuards,
+  Patch,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -9,6 +17,8 @@ import {
 import { SubscriptionsService } from '../../application/services/subscriptions.service';
 import { CreateSubscriptionDto } from '../../application/dtos/create-subscription.dto';
 import { AccessTokenAuthGuard, ApiKeyGuard } from '@leocodeio-njs/njs-auth';
+import { CancelSubscriptionDto } from '../../application/dtos/cancel-subscription.dto';
+import { UpdateSubscriptionDto } from '../../application/dtos/update-subscription.dto';
 @ApiTags('Subscriptions')
 // @ApiSecurity('x-api-key')
 // @ApiBearerAuth()
@@ -40,5 +50,47 @@ export class SubscriptionsController {
   @ApiResponse({ status: 200, description: 'Returns subscription details' })
   async getSubscription(@Param('id') id: string) {
     return this.subscriptionsService.getSubscription(id);
+  }
+
+  @Post(':id/cancel')
+  @ApiOperation({ summary: 'Cancel subscription by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Subscription canceled successfully',
+  })
+  async cancelSubscription(
+    @Param('id') id: string,
+    @Body() cancelSubscriptionDto: CancelSubscriptionDto,
+  ) {
+    return this.subscriptionsService.cancelSubscription(
+      id,
+      cancelSubscriptionDto,
+    );
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update subscription by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Subscription updated successfully',
+  })
+  async updateSubscription(
+    @Param('id') id: string,
+    @Body() updateSubscriptionDto: UpdateSubscriptionDto,
+  ) {
+    return this.subscriptionsService.updateSubscription(
+      id,
+      updateSubscriptionDto,
+    );
+  }
+
+  @Get(':id/invoices')
+  @ApiOperation({ summary: 'Get invoices for a subscription' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns all invoices for the subscription',
+  })
+  async getSubscriptionInvoices(@Param('id') id: string) {
+    return this.subscriptionsService.getSubscriptionInvoices(id);
   }
 }
