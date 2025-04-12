@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.6.0...v1.6.1) (2025-04-12)
+
+
+### Performance Improvements
+
+* **ref:** ref in readme\ ([8339d32](https://github.com/leocodeio-njs/njs-pgy/commit/8339d32a1144daf1184e4e0cbbb504eb8b48b8b3))
+
 # [1.6.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.5.2...v1.6.0) (2025-04-12)
 
 
