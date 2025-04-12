@@ -5,15 +5,15 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { IntegrationSubscriptionEntity } from './subscriptions.entity';
+import { IntegrationUserEntity } from './users.entity';
 
-@Entity('integration_subscription_audit_log')
-export class IntegrationSubscriptionAuditEntity {
+@Entity('integration_user_log')
+export class IntegrationUserLogEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('uuid', { name: 'subscription_id' })
-  subscriptionId: string;
+  @Column('uuid', { name: 'user_id' })
+  userId: string;
 
   @Column('jsonb', { name: 'old_value' })
   oldValue: Record<string, any>;
@@ -34,7 +34,7 @@ export class IntegrationSubscriptionAuditEntity {
   @Column('varchar', { name: 'created_by' })
   createdBy: string;
 
-  @ManyToOne(() => IntegrationSubscriptionEntity)
-  @JoinColumn({ name: 'subscription_id' })
-  subscription: IntegrationSubscriptionEntity;
+  @ManyToOne(() => IntegrationUserEntity)
+  @JoinColumn({ name: 'user_id' })
+  user: IntegrationUserEntity;
 }
