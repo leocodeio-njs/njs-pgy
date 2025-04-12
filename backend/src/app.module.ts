@@ -19,7 +19,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenAuthGuard } from '@leocodeio-njs/njs-auth';
 import { ApiKeyGuard } from '@leocodeio-njs/njs-auth';
 
-// Modules
+// razorpay Modules
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { PaymentsModule } from './modules/payments/payments.module';
@@ -27,6 +27,13 @@ import { CustomersModule } from './modules/customers/customers.module';
 import { PlansModule } from './modules/plans/plans.module';
 import { ItemsModule } from './modules/items/items.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+// Integration Modules
+import { IntegrationUsersModule } from './integration/users/users.module';
+import { IntegrationProductsModule } from './integration/products/products.module';
+import { IntegrationSubscriptionsModule } from './integration/subscriptions/subscriptions.module';
+
+// module
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -53,6 +60,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ItemsModule,
     PaymentsModule,
     OrdersModule,
+    IntegrationUsersModule,
+    IntegrationProductsModule,
+    IntegrationSubscriptionsModule,
   ],
   providers: [
     {
