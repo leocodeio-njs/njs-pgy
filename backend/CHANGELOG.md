@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.5.0...v1.5.1) (2025-04-12)
+
+
+### Performance Improvements
+
+* **products core:** improvised products core ([0126ccc](https://github.com/leocodeio-njs/njs-pgy/commit/0126cccd4badb6da323126d3da23dc5dc95b092b))
+
 # [1.5.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.4.2...v1.5.0) (2025-04-12)
 
 
