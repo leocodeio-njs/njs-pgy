@@ -7,8 +7,8 @@ import {
 } from 'typeorm';
 import { IntegrationSubscription } from './subscriptions.entity';
 
-@Entity('integration_subscription_log')
-export class IntegrationSubscriptionLog {
+@Entity('integration_subscription_audit_log')
+export class IntegrationSubscriptionAuditLog {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

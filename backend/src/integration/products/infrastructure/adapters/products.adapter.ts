@@ -5,9 +5,8 @@ import { IProductsPort } from '../../domain/ports/products.port';
 import { IIntegrationProduct } from '../../domain/models/products.model';
 import { ProductPricing } from '../../domain/models/product-pricing.model';
 import { Repository } from 'typeorm';
-import { IntegrationProductAuditEntity } from '../entities/products-log.entity';
+import { IntegrationProductAuditLogEntity } from '../entities/products-log.entity';
 import { SubscriptionTerms } from '../../domain/models/subscription-terms.model';
-import { productsProvider } from '../providers/products.provider';
 import { IntegrationProduct } from '../entities/products.entity';
 import { IntegrationSubscriptionTerms } from '../entities/subscription-terms.entity';
 import { IntegrationProductPricing } from '../entities/products-pricing.entity';
@@ -23,8 +22,8 @@ export class ProductRepositoryAdapter implements IProductsPort {
     private readonly pricingRepo: Repository<IntegrationProductPricing>,
     @Inject('IntegrationSubscriptionTermsRepository')
     private readonly termsRepo: Repository<IntegrationSubscriptionTerms>,
-    @Inject('IntegrationProductAuditRepository')
-    private readonly auditRepo: Repository<IntegrationProductAuditEntity>,
+    @Inject('IntegrationProductAuditLogRepository')
+    private readonly auditRepo: Repository<IntegrationProductAuditLogEntity>,
   ) {}
 
   async findAll(): Promise<IIntegrationProduct[]> {

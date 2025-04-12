@@ -8,7 +8,7 @@ import {
 import { IntegrationProduct } from './products.entity';
 
 @Entity('integration_product_audit_log')
-export class IntegrationProductAuditEntity {
+export class IntegrationProductAuditLogEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
