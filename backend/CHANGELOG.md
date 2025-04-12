@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.5.1...v1.5.2) (2025-04-12)
+
+
+### Performance Improvements
+
+* **users  core:** users  core implemented ([4919872](https://github.com/leocodeio-njs/njs-pgy/commit/4919872f30b94b6b9200dd977295982deccc33c7))
+
 ## [1.5.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.5.0...v1.5.1) (2025-04-12)
 
 
