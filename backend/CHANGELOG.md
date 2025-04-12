@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.3.0...v1.4.0) (2025-04-12)
+
+
+### Features
+
+* **integration moduless:** integration modules introduced ([ddaea29](https://github.com/leocodeio-njs/njs-pgy/commit/ddaea29b277a823559872ee2b83693a6deaf2b5b))
+
 # [1.3.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.2.3...v1.3.0) (2025-04-07)
 
 
