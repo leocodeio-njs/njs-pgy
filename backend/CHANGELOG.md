@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.4.0...v1.4.1) (2025-04-12)
+
+
+### Performance Improvements
+
+* **entities:** entities added ([f95e9e5](https://github.com/leocodeio-njs/njs-pgy/commit/f95e9e59ab8af43cdf54a0ec9c3d32bfb5b1278e))
+
 # [1.4.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.3.0...v1.4.0) (2025-04-12)
 
 
