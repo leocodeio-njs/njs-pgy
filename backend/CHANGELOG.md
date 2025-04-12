@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.4.2...v1.5.0) (2025-04-12)
+
+
+### Features
+
+* **ports and models:** ports and models implemented ([17a7e25](https://github.com/leocodeio-njs/njs-pgy/commit/17a7e255253cd9f9750f7933f898153e48e20656))
+
 ## [1.4.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.4.1...v1.4.2) (2025-04-12)
 
 
