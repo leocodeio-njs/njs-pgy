@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.5.2...v1.6.0) (2025-04-12)
+
+
+### Features
+
+* **subs core:** subs core ([cba7218](https://github.com/leocodeio-njs/njs-pgy/commit/cba7218aa2412beb7f1cfd09248e442b08574b0a))
+
 ## [1.5.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.5.1...v1.5.2) (2025-04-12)
 
 
