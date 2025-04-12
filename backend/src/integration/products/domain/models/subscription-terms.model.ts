@@ -1,3 +1,5 @@
+import { PlanPeriod } from "@/modules/razorpay/plans/application/types/plan.types";
+
 export enum TermUnit {
   DAY = 'DAY',
   MONTH = 'MONTH',
@@ -5,8 +7,10 @@ export enum TermUnit {
 }
 
 export enum BillingFrequency {
-  MONTHLY = 'MONTHLY',
-  YEARLY = 'YEARLY',
+  MONTHLY = 'monthly',
+  DAILY = 'daily',
+  WEEKLY = 'weekly',
+  YEARLY = 'yearly',
 }
 
 export class SubscriptionTerms {
@@ -16,7 +20,7 @@ export class SubscriptionTerms {
     public readonly termPeriod: number,
     public readonly termUom: TermUnit,
     public readonly trialPeriodDays: number | null,
-    public readonly billingFrequency: BillingFrequency,
+    public readonly billingFrequency: PlanPeriod,
     public readonly eolDate: Date | null,
     public readonly description?: string,
     private deletedAt?: Date,

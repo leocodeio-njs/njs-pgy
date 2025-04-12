@@ -7,6 +7,9 @@ import { productsProvider } from './infrastructure/providers/products.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { IntegrationProduct } from './infrastructure/entities/products.entity';
 import { IntegrationProductAuditLogEntity } from './infrastructure/entities/products-log.entity';
+import { RazorpayService } from '@/common/services/razorpay.service';
+import { PlansService } from '@/modules/razorpay/plans/application/services/plans.service';
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -18,6 +21,8 @@ import { IntegrationProductAuditLogEntity } from './infrastructure/entities/prod
   providers: [
     // services
     IntegrationProductsService,
+    RazorpayService,
+    PlansService,
     // providers
     {
       provide: IProductsPort,

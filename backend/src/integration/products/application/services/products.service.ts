@@ -13,7 +13,7 @@ import {
   TermUnit,
   BillingFrequency,
 } from '../../domain/models/subscription-terms.model';
-
+import { PlanPeriod } from '@/modules/razorpay/plans/application/types/plan.types';
 @Injectable()
 export class IntegrationProductsService {
   constructor(private readonly productPort: IProductsPort) {}
@@ -53,7 +53,7 @@ export class IntegrationProductsService {
               terms.termPeriod,
               terms.termUom as TermUnit,
               terms.trialPeriodDays || null,
-              terms.billingFrequency as BillingFrequency,
+              terms.billingFrequency as PlanPeriod,
               null,
               undefined,
               undefined,
@@ -134,7 +134,7 @@ export class IntegrationProductsService {
               terms.termPeriod,
               terms.termUom as TermUnit,
               terms.trialPeriodDays || null,
-              terms.billingFrequency as BillingFrequency,
+              terms.billingFrequency as PlanPeriod,
               null, // eolDate
               undefined, // description
               undefined, // deletedAt

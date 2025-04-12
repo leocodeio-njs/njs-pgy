@@ -10,6 +10,10 @@ import { SubscriptionTerms } from '../../domain/models/subscription-terms.model'
 import { IntegrationProduct } from '../entities/products.entity';
 import { IntegrationSubscriptionTerms } from '../entities/subscription-terms.entity';
 import { IntegrationProductPricing } from '../entities/products-pricing.entity';
+import { PlansService } from '@/modules/razorpay/plans/application/services/plans.service';
+import { PlanPeriod } from '@/modules/razorpay/plans/application/types/plan.types';
+import { CreatePlanDto } from '@/modules/razorpay/plans/application/dtos/create-plan.dto';
+import { Item } from '@/modules/razorpay/items/application/types/item.types';
 
 @Injectable()
 export class ProductRepositoryAdapter implements IProductsPort {
@@ -24,6 +28,7 @@ export class ProductRepositoryAdapter implements IProductsPort {
     private readonly termsRepo: Repository<IntegrationSubscriptionTerms>,
     @Inject('IntegrationProductAuditLogRepository')
     private readonly auditRepo: Repository<IntegrationProductAuditLogEntity>,
+    private readonly rzpPlansService: PlansService,
   ) {}
 
   async findAll(): Promise<IIntegrationProduct[]> {
@@ -67,7 +72,23 @@ export class ProductRepositoryAdapter implements IProductsPort {
     await queryRunner.startTransaction();
 
     try {
+      // rzp plan
+      const createPlanDto = new CreatePlanDto();
+      createPlanDto.period = product.getSubscriptionTerms()[0].billingFrequency;
+      createPlanDto.interval = product.getSubscriptionTerms()[0].termPeriod;
+      createPlanDto.item = {
+        name: product.name,
+        description: product.description,
+        amount: product.getPricing()[0].getAmount() * 100,
+        currency: 'INR',
+      } as Item;
+      const rzpPlan = await this.rzpPlansService.createPlan(createPlanDto);
+
+      // integration product
       const entity = this.toEntity(product);
+
+      // set pgy product id
+      entity.pgyProductId = rzpPlan.id;
 
       // save product
       const savedProduct = await this.productRepo.save(entity);

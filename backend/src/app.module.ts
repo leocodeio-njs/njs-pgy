@@ -20,18 +20,18 @@ import { AccessTokenAuthGuard } from '@leocodeio-njs/njs-auth';
 import { ApiKeyGuard } from '@leocodeio-njs/njs-auth';
 
 // razorpay Modules
-import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
-import { OrdersModule } from './modules/orders/orders.module';
-import { PaymentsModule } from './modules/payments/payments.module';
-import { CustomersModule } from './modules/customers/customers.module';
-import { PlansModule } from './modules/plans/plans.module';
-import { ItemsModule } from './modules/items/items.module';
+import { OrdersModule } from './modules/razorpay/orders/orders.module';
+import { PaymentsModule } from './modules/razorpay/payments/payments.module';
+import { CustomersModule } from './modules/razorpay/customers/customers.module';
+import { PlansModule } from './modules/razorpay/plans/plans.module';
+import { ItemsModule } from './modules/razorpay/items/items.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Integration Modules
 import { IntegrationUsersModule } from './integration/users/users.module';
 import { IntegrationProductsModule } from './integration/products/products.module';
 import { IntegrationSubscriptionsModule } from './integration/subscriptions/subscriptions.module';
+import { SubscriptionsModule } from './modules/razorpay/subscriptions/subscriptions.module';
 
 @Module({
   imports: [
