@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.4.1...v1.4.2) (2025-04-12)
+
+
+### Performance Improvements
+
+* **naming:** entity naming ([77c08ae](https://github.com/leocodeio-njs/njs-pgy/commit/77c08ae4538ff9eeca9814876a0f7ee6d7aee077))
+
 ## [1.4.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.4.0...v1.4.1) (2025-04-12)
 
 
