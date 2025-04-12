@@ -33,7 +33,6 @@ import { IntegrationUsersModule } from './integration/users/users.module';
 import { IntegrationProductsModule } from './integration/products/products.module';
 import { IntegrationSubscriptionsModule } from './integration/subscriptions/subscriptions.module';
 
-// module
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -54,6 +53,10 @@ import { IntegrationSubscriptionsModule } from './integration/subscriptions/subs
       }),
       inject: [AppConfigService],
     }),
+    // Integration Modules
+    IntegrationUsersModule,
+    IntegrationProductsModule,
+    IntegrationSubscriptionsModule,
     // rzp Modules
     CustomersModule,
     PlansModule,
@@ -61,10 +64,6 @@ import { IntegrationSubscriptionsModule } from './integration/subscriptions/subs
     ItemsModule,
     PaymentsModule,
     OrdersModule,
-    // Integration Modules
-    IntegrationUsersModule,
-    IntegrationProductsModule,
-    IntegrationSubscriptionsModule,
   ],
   providers: [
     {
