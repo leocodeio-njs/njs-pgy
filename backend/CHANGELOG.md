@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.6.1...v1.6.2) (2025-04-12)
+
+
+### Performance Improvements
+
+* **prod rzp int:** prod rzp integration ([6c44994](https://github.com/leocodeio-njs/njs-pgy/commit/6c44994ec244cf6fd392b592c5f6cb91a077fbd9))
+
 ## [1.6.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.6.0...v1.6.1) (2025-04-12)
 
 
