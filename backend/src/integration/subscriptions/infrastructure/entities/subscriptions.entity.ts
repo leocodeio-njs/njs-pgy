@@ -5,10 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { IntegrationProductEntity } from '@/integration/products/infrastructure/entities/products.entity';
+import { IntegrationProduct } from '@/integration/products/infrastructure/entities/products.entity';
 
 @Entity('integration_subscriptions')
-export class IntegrationSubscriptionEntity {
+export class IntegrationSubscription {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -27,12 +27,9 @@ export class IntegrationSubscriptionEntity {
   @Column('timestamp with time zone', { name: 'deleted_at' })
   deletedAt: Date;
 
-  @ManyToOne(
-    () => IntegrationProductEntity,
-    (product) => product.subscriptionTerms,
-  )
+  @ManyToOne(() => IntegrationProduct, (product) => product.subscriptionTerms)
   @JoinColumn({ name: 'product_id' })
-  product: IntegrationProductEntity;
+  product: IntegrationProduct;
 
   // Product ID to get the subscription terms
   @Column('uuid', { name: 'product_id' })

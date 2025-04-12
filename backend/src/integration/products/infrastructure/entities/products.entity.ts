@@ -5,11 +5,11 @@ import {
   OneToMany,
   DeleteDateColumn,
 } from 'typeorm';
-import { IntegrationProductPricingEntity } from './products-pricing.entity';
-import { IntegrationSubscriptionTermsEntity } from './subscription-terms.entity';
+import { IntegrationProductPricing } from './products-pricing.entity';
+import { IntegrationSubscriptionTerms } from './subscription-terms.entity';
 
 @Entity('integration_products')
-export class IntegrationProductEntity {
+export class IntegrationProduct {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -47,22 +47,22 @@ export class IntegrationProductEntity {
   deletedAt?: Date;
 
   @OneToMany(
-    () => IntegrationProductPricingEntity,
+    () => IntegrationProductPricing,
     (pricing) => pricing.product,
     {
       cascade: true,
     },
   )
-  pricing: IntegrationProductPricingEntity[];
+  pricing: IntegrationProductPricing[];
 
   @OneToMany(
-    () => IntegrationSubscriptionTermsEntity,
+    () => IntegrationSubscriptionTerms,
     (terms) => terms.product,
     {
       cascade: true,
     },
   )
-  subscriptionTerms: IntegrationSubscriptionTermsEntity[];
+  subscriptionTerms: IntegrationSubscriptionTerms[];
 
   @Column({ name: 'pgy_product_id', nullable: true })
   pgyProductId?: string;

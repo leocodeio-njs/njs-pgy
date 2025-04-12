@@ -6,10 +6,10 @@ import {
   JoinColumn,
   DeleteDateColumn,
 } from 'typeorm';
-import { IntegrationProductEntity } from './products.entity';
+import { IntegrationProduct } from './products.entity';
 
 @Entity('integration_subscription_terms')
-export class IntegrationSubscriptionTermsEntity {
+export class IntegrationSubscriptionTerms {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -51,10 +51,7 @@ export class IntegrationSubscriptionTermsEntity {
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   deletedAt?: Date;
 
-  @ManyToOne(
-    () => IntegrationProductEntity,
-    (product) => product.subscriptionTerms,
-  )
+  @ManyToOne(() => IntegrationProduct, (product) => product.subscriptionTerms)
   @JoinColumn({ name: 'product_id' })
-  product: IntegrationProductEntity;
+  product: IntegrationProduct;
 }

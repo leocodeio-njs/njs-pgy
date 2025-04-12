@@ -5,10 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { IntegrationSubscriptionEntity } from './subscriptions.entity';
+import { IntegrationSubscription } from './subscriptions.entity';
 
-@Entity('integration_subscription_audit_log')
-export class IntegrationSubscriptionAuditEntity {
+@Entity('integration_subscription_log')
+export class IntegrationSubscriptionLog {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -34,7 +34,7 @@ export class IntegrationSubscriptionAuditEntity {
   @Column('varchar', { name: 'created_by' })
   createdBy: string;
 
-  @ManyToOne(() => IntegrationSubscriptionEntity)
+  @ManyToOne(() => IntegrationSubscription)
   @JoinColumn({ name: 'subscription_id' })
-  subscription: IntegrationSubscriptionEntity;
+  subscription: IntegrationSubscription;
 }

@@ -1,15 +1,15 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('integration_users')
-export class IntegrationUserEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class IntegrationUser {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   email: string;
 
   @Column()
-  password: string;
+  phone: string;
 
   @Column()
   name: string;

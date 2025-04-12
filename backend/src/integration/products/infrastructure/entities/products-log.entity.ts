@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { IntegrationProductEntity } from './products.entity';
+import { IntegrationProduct } from './products.entity';
 
 @Entity('integration_product_audit_log')
 export class IntegrationProductAuditEntity {
@@ -34,7 +34,7 @@ export class IntegrationProductAuditEntity {
   @Column('varchar', { name: 'created_by' })
   createdBy: string;
 
-  @ManyToOne(() => IntegrationProductEntity)
+  @ManyToOne(() => IntegrationProduct)
   @JoinColumn({ name: 'product_id' })
-  product: IntegrationProductEntity;
+  product: IntegrationProduct;
 }

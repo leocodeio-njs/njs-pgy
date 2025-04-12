@@ -5,10 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { IntegrationUserEntity } from './users.entity';
+import { IntegrationUser } from './users.entity';
 
 @Entity('integration_user_log')
-export class IntegrationUserLogEntity {
+export class IntegrationUserLog {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -34,7 +34,7 @@ export class IntegrationUserLogEntity {
   @Column('varchar', { name: 'created_by' })
   createdBy: string;
 
-  @ManyToOne(() => IntegrationUserEntity)
+  @ManyToOne(() => IntegrationUser)
   @JoinColumn({ name: 'user_id' })
-  user: IntegrationUserEntity;
+  user: IntegrationUser;
 }
