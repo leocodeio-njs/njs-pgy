@@ -1,6 +1,6 @@
 import { IIntegrationProduct } from '../models/products.model';
 
-export abstract class IProductsRepository {
+export abstract class IProductsPort {
   abstract findAll(): Promise<IIntegrationProduct[]>;
   abstract findById(id: string): Promise<IIntegrationProduct | null>;
   abstract findValidProducts(date: Date): Promise<IIntegrationProduct[]>;
