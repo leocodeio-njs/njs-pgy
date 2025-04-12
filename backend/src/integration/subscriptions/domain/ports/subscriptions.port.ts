@@ -1,13 +1,16 @@
 import { IIntegrationSubscription } from '../models/subscriptions.model';
 
-export interface ISubscriptionsRepository {
-  findAll(): Promise<IIntegrationSubscription[]>;
-  findOne(id: string): Promise<IIntegrationSubscription>;
-  save(
+export abstract class ISubscriptionsPort {
+  abstract findAll(): Promise<IIntegrationSubscription[]>;
+  abstract findOne(id: string): Promise<IIntegrationSubscription>;
+  abstract save(
     subscription: IIntegrationSubscription,
   ): Promise<IIntegrationSubscription>;
-  update(id: string, subscription: IIntegrationSubscription): Promise<void>;
-  cancel(id: string): Promise<void>;
-  getInvoices(id: string): Promise<any>;
+  abstract update(
+    id: string,
+    subscription: IIntegrationSubscription,
+  ): Promise<IIntegrationSubscription>;
+  abstract cancel(id: string): Promise<void>;
+  abstract getInvoices(id: string): Promise<any>;
   // [TODO] work on offers
 }

@@ -4,7 +4,16 @@ import { IntegrationProductsService } from './application/services/products.serv
 import { IProductsPort } from './domain/ports/products.port';
 import { ProductRepositoryAdapter } from './infrastructure/adapters/products.adapter';
 import { productsProvider } from './infrastructure/providers/products.provider';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { IntegrationProduct } from './infrastructure/entities/products.entity';
+import { IntegrationProductAuditLogEntity } from './infrastructure/entities/products-log.entity';
 @Module({
+  imports: [
+    TypeOrmModule.forFeature([
+      IntegrationProduct,
+      IntegrationProductAuditLogEntity,
+    ]),
+  ],
   controllers: [IntegrationProductsController],
   providers: [
     // services

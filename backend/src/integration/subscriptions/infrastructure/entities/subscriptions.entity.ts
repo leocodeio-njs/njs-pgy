@@ -33,6 +33,12 @@ export class IntegrationSubscription {
 
   // Product ID to get the subscription terms
   @Column('uuid', { name: 'product_id' })
-  productId: string;
+  integrationProductId: string;
   // For now should get total_count =  time period * billing frequency
+
+  @Column('varchar', { name: 'status' })
+  status: string;
+
+  @Column('varchar', { name: 'pgy_subscription_id' })
+  pgySubscriptionId: string;
 }

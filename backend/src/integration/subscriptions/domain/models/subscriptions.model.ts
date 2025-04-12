@@ -3,7 +3,8 @@ export class IIntegrationSubscription {
     public customerId: string,
     public planId: string,
     public integrationProductId: string,
-    public termPeriod: number,
+    public status: string,
+    public pgySubscriptionId?: string,
     // [TODO] add more fields
   ) {}
 }

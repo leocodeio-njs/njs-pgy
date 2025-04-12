@@ -54,12 +54,14 @@ import { IntegrationSubscriptionsModule } from './integration/subscriptions/subs
       }),
       inject: [AppConfigService],
     }),
+    // rzp Modules
     CustomersModule,
     PlansModule,
     SubscriptionsModule,
     ItemsModule,
     PaymentsModule,
     OrdersModule,
+    // Integration Modules
     IntegrationUsersModule,
     IntegrationProductsModule,
     IntegrationSubscriptionsModule,
