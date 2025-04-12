@@ -19,4 +19,13 @@ export class IntegrationUser {
 
   @Column()
   customerId: string;
+
+  @Column()
+  createdAt: Date;
+
+  @Column()
+  updatedAt: Date;
+
+  @Column()
+  deletedAt: Date;
 }
