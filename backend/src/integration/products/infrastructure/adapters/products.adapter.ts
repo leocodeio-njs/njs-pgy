@@ -81,9 +81,12 @@ export class ProductRepositoryAdapter implements IProductsPort {
     await queryRunner.startTransaction();
 
     try {
-      // rzp plan
+      const manager = queryRunner.manager;
+      // Create Razorpay plan
       const createPlanDto = new CreatePlanDto();
-      createPlanDto.period = product.getSubscriptionTerms()[0].billingFrequency;
+      createPlanDto.period = product
+        .getSubscriptionTerms()[0]
+        .billingFrequency.toLowerCase() as PlanPeriod;
       createPlanDto.interval = product.getSubscriptionTerms()[0].termPeriod;
       createPlanDto.item = {
         name: product.name,
@@ -93,36 +96,32 @@ export class ProductRepositoryAdapter implements IProductsPort {
       } as Item;
       const rzpPlan = await this.rzpPlansService.createPlan(createPlanDto);
 
-      // integration product
+      // Prepare entity
       const entity = this.toEntity(product);
-
-      // set pgy product id
       entity.pgyProductId = rzpPlan.id;
 
-      // save product
-      const savedProduct = await this.productRepo.save(entity);
+      // Save product
+      const savedProduct = await manager.save(IntegrationProduct, entity);
 
-      // save pricing
+      // Save pricing
       const pricing = entity.pricing.map((p) => ({
         ...p,
         productId: savedProduct.id,
       }));
+      await manager.save(IntegrationProductPricing, pricing);
+
+      // Save subscription terms
       const terms = entity.subscriptionTerms.map((t) => ({
         ...t,
         productId: savedProduct.id,
       }));
+      await manager.save(IntegrationSubscriptionTerms, terms);
 
-      // save pricing
-      await this.pricingRepo.save(pricing);
-
-      // save terms
-      await this.termsRepo.save(terms);
-
-      // save audit log
-      await this.auditRepo.save({
+      // Save audit log
+      await manager.save(IntegrationProductAuditLogEntity, {
         productId: savedProduct.id,
         action: 'CREATE',
-        oldValue: null,
+        oldValue: {},
         newValue: savedProduct,
         createdAt: new Date(),
         createdBy: 'system',
@@ -147,6 +146,7 @@ export class ProductRepositoryAdapter implements IProductsPort {
     await queryRunner.startTransaction();
 
     try {
+      const manager = queryRunner.manager;
       const oldProduct = await this.findById(id);
       const entity = this.toEntity(product);
 
@@ -163,7 +163,7 @@ export class ProductRepositoryAdapter implements IProductsPort {
       const rzpPlan = await this.rzpPlansService.createPlan(createPlanDto);
 
       // update product
-      const updatedProduct = await this.productRepo.save({
+      const updatedProduct = await manager.save(IntegrationProduct, {
         ...entity,
         id,
         pgyProductId: rzpPlan.id,
@@ -180,19 +180,19 @@ export class ProductRepositoryAdapter implements IProductsPort {
       }));
 
       // update pricing
-      await this.pricingRepo.save(pricing);
+      await manager.save(IntegrationProductPricing, pricing);
 
       // update terms
-      await this.termsRepo.save(terms);
+      await manager.save(IntegrationSubscriptionTerms, terms);
 
       // Use the audit repository
-      await this.auditRepo.save({
+      await manager.save(IntegrationProductAuditLogEntity, {
         productId: id,
         action: 'UPDATE',
         oldValue: oldProduct,
         newValue: updatedProduct,
         createdAt: new Date(),
-        createdBy: 'system', // Replace with actual user ID from context
+        createdBy: 'system',
       });
 
       await queryRunner.commitTransaction();
@@ -211,25 +211,23 @@ export class ProductRepositoryAdapter implements IProductsPort {
     await queryRunner.startTransaction();
 
     try {
+      const manager = queryRunner.manager;
       const oldProduct = await this.findById(id);
       if (!oldProduct) {
         throw new Error('Product not found');
       }
 
       // soft delete pricing
-      await this.pricingRepo.softDelete({ productId: id });
+      await manager.softDelete(IntegrationProductPricing, { productId: id });
 
       // soft delete terms
-      await this.termsRepo.softDelete({ productId: id });
+      await manager.softDelete(IntegrationSubscriptionTerms, { productId: id });
 
       // soft delete product
-      await this.productRepo.softDelete({ id });
-
-      // soft delete product
-      await this.productRepo.softDelete({ id });
+      await manager.softDelete(IntegrationProduct, { id });
 
       // Use the audit repository
-      await this.auditRepo.save({
+      await manager.save(IntegrationProductAuditLogEntity, {
         productId: id,
         action: 'SOFT_DELETE',
         oldValue: oldProduct,
@@ -253,15 +251,16 @@ export class ProductRepositoryAdapter implements IProductsPort {
     await queryRunner.startTransaction();
 
     try {
+      const manager = queryRunner.manager;
       const oldProduct = await this.findById(id);
 
-      // Use the specific repositories for hard deletes
-      await this.pricingRepo.delete({ productId: id });
-      await this.termsRepo.delete({ productId: id });
-      await this.productRepo.delete({ id });
+      // Use the manager for hard deletes
+      await manager.delete(IntegrationProductPricing, { productId: id });
+      await manager.delete(IntegrationSubscriptionTerms, { productId: id });
+      await manager.delete(IntegrationProduct, { id });
 
       // Use the audit repository
-      await this.auditRepo.save({
+      await manager.save(IntegrationProductAuditLogEntity, {
         productId: id,
         action: 'DELETE',
         oldValue: oldProduct,

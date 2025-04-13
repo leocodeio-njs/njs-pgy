@@ -8,7 +8,8 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AppConfigModule } from '@leocodeio-njs/njs-config';
 import { AppConfigService } from '@leocodeio-njs/njs-config';
 import { ConfigModule } from '@nestjs/config';
-
+// response
+import { ResponseInterceptor } from '@leocodeio-njs/njs-response';
 // Logging
 import { LoggingModule } from '@leocodeio-njs/njs-logging';
 import { LogEntry } from '@leocodeio-njs/njs-logging/dist/logging/entities/log-entry.entity';
@@ -69,6 +70,10 @@ import { SubscriptionsModule } from './modules/razorpay/subscriptions/subscripti
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
     },
     // {
     //   provide: APP_GUARD,

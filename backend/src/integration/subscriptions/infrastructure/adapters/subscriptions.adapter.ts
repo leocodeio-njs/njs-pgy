@@ -53,14 +53,16 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
     await queryRunner.startTransaction();
 
     try {
+      const manager = queryRunner.manager;
       // customer should be created first
       let customerId: string;
       const user = await this.IntUserService.findByIntegrationUserId(
         subscription.integrationUserId,
       );
+
       if (!user) {
         // Get user from auth table
-        const authUser = await this.dataSource.query(
+        const authUser = await manager.query(
           'SELECT * FROM auth.users WHERE id = $1',
           [subscription.integrationUserId],
         );
@@ -82,11 +84,9 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
           throw customer;
         }
         integrationUser.customerId = customer.id;
-        await this.IntUserService.save(integrationUser);
-        // set the customer id
+        await manager.save(IntegrationUser, integrationUser);
         customerId = customer.id;
       } else {
-        // set the customer id
         customerId = user.customerId;
       }
 
@@ -94,7 +94,6 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
       const createSubscriptionDto = new CreateSubscriptionDto();
       createSubscriptionDto.customer_id = customerId;
       createSubscriptionDto.plan_id = subscription.planId;
-      // get the product to get the subscription terms
       const product = await this.productService.findByPlanId(
         subscription.planId,
       );
@@ -107,22 +106,26 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
         );
 
       const entity = this.toEntity(subscription);
-      // set the pgy subscription id
       entity.pgySubscriptionId = rzpSubscription.id;
-      const savedSubscription = await this.subscriptionRepo.save(entity);
 
-      // Log the creation in audit
-      await this.auditRepo.save({
+      // Save subscription using manager
+      const savedSubscription = await manager.save(
+        IntegrationSubscription,
+        entity,
+      );
+
+      // Log audit using manager
+      await manager.save(IntegrationSubscriptionAuditLog, {
         subscriptionId: savedSubscription.id,
         action: 'CREATE',
         oldValue: null,
         newValue: savedSubscription,
         createdAt: new Date(),
-        createdBy: 'system', // Replace with actual user ID from context
+        createdBy: 'system',
       });
 
       await queryRunner.commitTransaction();
-      return await this.findById(savedSubscription.id);
+      return this.toDomain(savedSubscription);
     } catch (err) {
       await queryRunner.rollbackTransaction();
       throw err;
@@ -140,34 +143,30 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
     await queryRunner.startTransaction();
 
     try {
-      // find the old subscription
+      const manager = queryRunner.manager;
       const oldSubscription = await this.findById(id);
       if (!oldSubscription) {
         throw new Error('Subscription not found');
       }
 
-      // [TODO] to update subscription, we need to call the rzp service
-
       const entity = this.toEntity(subscription);
-
-      // Update subscription
-      const updatedSubscription = await this.subscriptionRepo.save({
+      const updatedSubscription = await manager.save(IntegrationSubscription, {
         ...entity,
         id,
       });
 
-      // Log the update in audit
-      await this.auditRepo.save({
+      // Log audit using manager
+      await manager.save(IntegrationSubscriptionAuditLog, {
         subscriptionId: id,
         action: 'UPDATE',
         oldValue: oldSubscription,
         newValue: updatedSubscription,
         createdAt: new Date(),
-        createdBy: 'system', // Replace with actual user ID from context
+        createdBy: 'system',
       });
 
       await queryRunner.commitTransaction();
-      return await this.findById(id);
+      return this.toDomain(updatedSubscription);
     } catch (err) {
       await queryRunner.rollbackTransaction();
       throw err;
@@ -182,26 +181,24 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
     await queryRunner.startTransaction();
 
     try {
+      const manager = queryRunner.manager;
       const oldSubscription = await this.findById(id);
       if (!oldSubscription) {
         throw new Error('Subscription not found');
       }
 
-      // Delete subscription
-      await this.subscriptionRepo.delete({ id });
+      // Delete using manager
+      await manager.delete(IntegrationSubscription, { id });
 
-      // [TODO] to cancel subscription, we need to call the rzp service
       const cancelSubscriptionDto = new CancelSubscriptionDto();
-
-      // cancel at cycle end or not should be decided
       cancelSubscriptionDto.cancel_at_cycle_end = 1;
       await this.rzpSubscriptionsService.cancelSubscription(
         oldSubscription.pgySubscriptionId,
         cancelSubscriptionDto,
       );
 
-      // Log the deletion in audit
-      await this.auditRepo.save({
+      // Log audit using manager
+      await manager.save(IntegrationSubscriptionAuditLog, {
         subscriptionId: id,
         action: 'DELETE',
         oldValue: oldSubscription,
@@ -225,16 +222,17 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
     await queryRunner.startTransaction();
 
     try {
+      const manager = queryRunner.manager;
       const oldSubscription = await this.findById(id);
       if (!oldSubscription) {
         throw new Error('Subscription not found');
       }
 
-      // Soft delete subscription
-      await this.subscriptionRepo.softDelete({ id });
+      // Soft delete using manager
+      await manager.softDelete(IntegrationSubscription, { id });
 
-      // Log the soft deletion in audit
-      await this.auditRepo.save({
+      // Log audit using manager
+      await manager.save(IntegrationSubscriptionAuditLog, {
         subscriptionId: id,
         action: 'SOFT_DELETE',
         oldValue: oldSubscription,
