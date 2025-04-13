@@ -51,9 +51,9 @@ import { usersProvider } from '../users/infrastructure/providers/users.provider'
       provide: IUsersPort,
       useClass: UserRepositoryAdapter,
     },
-    ...subscriptionsProvider,
-    ...productsProvider,
     ...usersProvider,
+    ...productsProvider,
+    ...subscriptionsProvider,
   ],
 })
 export class IntegrationSubscriptionsModule {}

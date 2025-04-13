@@ -7,6 +7,8 @@ import { productsProvider } from './infrastructure/providers/products.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { IntegrationProduct } from './infrastructure/entities/products.entity';
 import { IntegrationProductAuditLogEntity } from './infrastructure/entities/products-log.entity';
+import { IntegrationProductPricing } from './infrastructure/entities/products-pricing.entity';
+import { IntegrationSubscriptionTerms } from './infrastructure/entities/subscription-terms.entity';
 import { RazorpayService } from '@/common/services/razorpay.service';
 import { PlansService } from '@/modules/razorpay/plans/application/services/plans.service';
 
@@ -15,6 +17,8 @@ import { PlansService } from '@/modules/razorpay/plans/application/services/plan
     TypeOrmModule.forFeature([
       IntegrationProduct,
       IntegrationProductAuditLogEntity,
+      IntegrationProductPricing,
+      IntegrationSubscriptionTerms,
     ]),
   ],
   controllers: [IntegrationProductsController],

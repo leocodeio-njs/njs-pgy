@@ -18,7 +18,7 @@ export const productsProvider = [
     useClass: Repository<IntegrationSubscriptionTerms>,
   },
   {
-    provide: 'IntegrationProductAuditLogRepository',
+    provide: 'IntegrationProductAuditLogEntityRepository',
     useClass: Repository<IntegrationProductAuditLogEntity>,
   },
 ];

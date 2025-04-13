@@ -13,7 +13,7 @@ import { VerifySubscriptionPaymentDto } from '../../application/dtos/verify-subs
 @ApiTags('Payments')
 // @ApiSecurity('x-api-key')
 // @ApiBearerAuth()
-@Controller('payments')
+@Controller('rzp/payments')
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 

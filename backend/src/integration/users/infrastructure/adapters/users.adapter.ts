@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { InjectDataSource } from '@nestjs/typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { IUsersPort } from '../../domain/ports/users.port';
 import { IntegrationUser } from '../entities/users.entity';
@@ -9,12 +9,12 @@ import { IIntegrationUser } from '../../domain/models/users.model';
 @Injectable()
 export class UserRepositoryAdapter implements IUsersPort {
   constructor(
+    @InjectRepository(IntegrationUser)
+    private readonly userRepo: Repository<IntegrationUser>,
+    @InjectRepository(IntegrationUserAuditLog)
+    private readonly auditRepo: Repository<IntegrationUserAuditLog>,
     @InjectDataSource()
     private readonly dataSource: DataSource,
-    @Inject('IntegrationUserRepository')
-    private readonly userRepo: Repository<IntegrationUser>,
-    @Inject('IntegrationUserAuditLogRepository')
-    private readonly auditRepo: Repository<IntegrationUserAuditLog>,
   ) {}
 
   async findAll(): Promise<IIntegrationUser[]> {

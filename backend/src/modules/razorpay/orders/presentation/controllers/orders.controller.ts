@@ -12,7 +12,7 @@ import { CreateOrderDto } from '../../application/dtos/create-order.dto';
 @ApiTags('Orders')
 // @ApiSecurity('x-api-key')
 // @ApiBearerAuth()
-@Controller('orders')
+@Controller('rzp/orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 

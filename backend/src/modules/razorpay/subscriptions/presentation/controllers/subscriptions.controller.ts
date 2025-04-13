@@ -22,7 +22,7 @@ import { UpdateSubscriptionDto } from '../../application/dtos/update-subscriptio
 @ApiTags('Subscriptions')
 // @ApiSecurity('x-api-key')
 // @ApiBearerAuth()
-@Controller('subscriptions')
+@Controller('rzp/subscriptions')
 export class SubscriptionsController {
   constructor(private readonly subscriptionsService: SubscriptionsService) {}
 

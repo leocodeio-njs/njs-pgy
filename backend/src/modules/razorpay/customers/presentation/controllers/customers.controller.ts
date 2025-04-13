@@ -20,7 +20,7 @@ import { UpdateCustomerDto } from '../../application/dtos/update-customer.dto';
 @ApiTags('Customers')
 // @ApiSecurity('x-api-key')
 // @ApiBearerAuth()
-@Controller('customers')
+@Controller('rzp/customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { InjectDataSource } from '@nestjs/typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { IProductsPort } from '../../domain/ports/products.port';
 import { IIntegrationProduct } from '../../domain/models/products.model';
@@ -18,17 +18,17 @@ import { Item } from '@/modules/razorpay/items/application/types/item.types';
 @Injectable()
 export class ProductRepositoryAdapter implements IProductsPort {
   constructor(
-    @InjectDataSource()
-    private readonly dataSource: DataSource,
-    @Inject('IntegrationProductRepository')
+    @InjectRepository(IntegrationProduct)
     private readonly productRepo: Repository<IntegrationProduct>,
-    @Inject('IntegrationProductPricingRepository')
+    @InjectRepository(IntegrationProductPricing)
     private readonly pricingRepo: Repository<IntegrationProductPricing>,
-    @Inject('IntegrationSubscriptionTermsRepository')
+    @InjectRepository(IntegrationSubscriptionTerms)
     private readonly termsRepo: Repository<IntegrationSubscriptionTerms>,
-    @Inject('IntegrationProductAuditLogRepository')
+    @InjectRepository(IntegrationProductAuditLogEntity)
     private readonly auditRepo: Repository<IntegrationProductAuditLogEntity>,
     private readonly rzpPlansService: PlansService,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
   ) {}
 
   async findAll(): Promise<IIntegrationProduct[]> {

@@ -21,7 +21,7 @@ import { UpdateItemDto } from '../../application/dtos/update-item.dto';
 @ApiTags('Items')
 // @ApiSecurity('x-api-key')
 // @ApiBearerAuth()
-@Controller('items')
+@Controller('rzp/items')
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 

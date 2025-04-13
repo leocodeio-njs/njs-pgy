@@ -1,5 +1,5 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { InjectDataSource } from '@nestjs/typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { ISubscriptionsPort } from '../../domain/ports/subscriptions.port';
 import { IIntegrationSubscription } from '../../domain/models/subscriptions.model';
@@ -18,16 +18,16 @@ import { IntegrationUser } from '@/integration/users/infrastructure/entities/use
 @Injectable()
 export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
   constructor(
-    @InjectDataSource()
-    private readonly dataSource: DataSource,
-    @Inject('IntegrationSubscriptionRepository')
+    @InjectRepository(IntegrationSubscription)
     private readonly subscriptionRepo: Repository<IntegrationSubscription>,
-    @Inject('IntegrationSubscriptionAuditLogRepository')
+    @InjectRepository(IntegrationSubscriptionAuditLog)
     private readonly auditRepo: Repository<IntegrationSubscriptionAuditLog>,
     private readonly productService: IntegrationProductsService,
     private readonly rzpSubscriptionsService: SubscriptionsService,
     private readonly customerService: CustomersService,
     private readonly IntUserService: IntegrationUsersService,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
   ) {}
 
   async findAll(): Promise<IIntegrationSubscription[]> {
