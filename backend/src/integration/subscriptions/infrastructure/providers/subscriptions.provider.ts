@@ -1,14 +1,18 @@
-import { Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { IntegrationSubscription } from '../entities/subscriptions.entity';
 import { IntegrationSubscriptionAuditLog } from '../entities/subscriptions-log.entity';
 
 export const subscriptionsProvider = [
   {
     provide: 'IntegrationSubscriptionRepository',
-    useClass: Repository<IntegrationSubscription>,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(IntegrationSubscription),
+    inject: [DataSource],
   },
   {
     provide: 'IntegrationSubscriptionAuditLogRepository',
-    useClass: Repository<IntegrationSubscriptionAuditLog>,
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(IntegrationSubscriptionAuditLog),
+    inject: [DataSource],
   },
 ];

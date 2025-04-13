@@ -33,7 +33,7 @@ export class ProductRepositoryAdapter implements IProductsPort {
 
   async findAll(): Promise<IIntegrationProduct[]> {
     const entities = await this.productRepo.find({
-      relations: ['pricing', 'subscriptionTerms'],
+      // relations: ['pricing', 'subscriptionTerms'],
       withDeleted: false,
     });
     return entities.map((e) => this.toDomain(e));
