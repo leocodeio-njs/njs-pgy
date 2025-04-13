@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.8.0...v1.9.0) (2025-04-13)
+
+
+### Features
+
+* **refactor:** refactor ([c491089](https://github.com/leocodeio-njs/njs-pgy/commit/c4910899d70a5d1ab67bb09b902298c65e701755))
+
 # [1.8.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.7.2...v1.8.0) (2025-04-13)
 
 
