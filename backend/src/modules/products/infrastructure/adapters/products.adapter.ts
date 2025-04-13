@@ -152,7 +152,9 @@ export class ProductRepositoryAdapter implements IProductsPort {
 
       // create new rzp plan
       const createPlanDto = new CreatePlanDto();
-      createPlanDto.period = product.getSubscriptionTerms()[0].billingFrequency;
+      createPlanDto.period = product
+        .getSubscriptionTerms()[0]
+        .billingFrequency.toLowerCase() as PlanPeriod;
       createPlanDto.interval = product.getSubscriptionTerms()[0].termPeriod;
       createPlanDto.item = {
         name: product.name,
