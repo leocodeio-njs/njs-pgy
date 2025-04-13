@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.7.0...v1.7.1) (2025-04-13)
+
+
+### Bug Fixes
+
+* **mixage of endpoints:** solvedmixage of endpoints ([4abcc51](https://github.com/leocodeio-njs/njs-pgy/commit/4abcc516974b760d0736c86d38736f0fe0418af6))
+
 # [1.7.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.6.2...v1.7.0) (2025-04-13)
 
 
