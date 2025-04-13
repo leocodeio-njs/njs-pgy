@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.6.2...v1.7.0) (2025-04-13)
+
+
+### Features
+
+* **round 1:** commit before check integrations ([985fae1](https://github.com/leocodeio-njs/njs-pgy/commit/985fae14e9c0cb08122d3a7f859656907e1bb1d7))
+
 ## [1.6.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.6.1...v1.6.2) (2025-04-12)
 
 
