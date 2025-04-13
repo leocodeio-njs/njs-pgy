@@ -35,7 +35,7 @@ export class IntegrationUsersController {
   @Get('integration-user/:integrationUserId')
   async findByIntegrationUserId(
     @Param('integrationUserId') integrationUserId: string,
-  ): Promise<IIntegrationUser[]> {
+  ): Promise<IIntegrationUser> {
     return this.usersService.findByIntegrationUserId(integrationUserId);
   }
 

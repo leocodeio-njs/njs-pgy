@@ -48,6 +48,15 @@ export class ProductRepositoryAdapter implements IProductsPort {
     return entity ? this.toDomain(entity) : null;
   }
 
+  async findByPlanId(planId: string): Promise<IIntegrationProduct | null> {
+    const entity = await this.productRepo.findOne({
+      where: { pgyProductId: planId },
+      relations: ['pricing', 'subscriptionTerms'],
+      withDeleted: false,
+    });
+    return entity ? this.toDomain(entity) : null;
+  }
+
   async findValidProducts(date: Date): Promise<IIntegrationProduct[]> {
     const entities = await this.productRepo
       .createQueryBuilder('product')
@@ -109,6 +118,16 @@ export class ProductRepositoryAdapter implements IProductsPort {
       // save terms
       await this.termsRepo.save(terms);
 
+      // save audit log
+      await this.auditRepo.save({
+        productId: savedProduct.id,
+        action: 'CREATE',
+        oldValue: null,
+        newValue: savedProduct,
+        createdAt: new Date(),
+        createdBy: 'system',
+      });
+
       await queryRunner.commitTransaction();
       return this.toDomain(await this.findById(savedProduct.id));
     } catch (err) {
@@ -131,8 +150,24 @@ export class ProductRepositoryAdapter implements IProductsPort {
       const oldProduct = await this.findById(id);
       const entity = this.toEntity(product);
 
+      // create new rzp plan
+      const createPlanDto = new CreatePlanDto();
+      createPlanDto.period = product.getSubscriptionTerms()[0].billingFrequency;
+      createPlanDto.interval = product.getSubscriptionTerms()[0].termPeriod;
+      createPlanDto.item = {
+        name: product.name,
+        description: product.description,
+        amount: product.getPricing()[0].getAmount() * 100,
+        currency: 'INR',
+      } as Item;
+      const rzpPlan = await this.rzpPlansService.createPlan(createPlanDto);
+
       // update product
-      const updatedProduct = await this.productRepo.save({ ...entity, id });
+      const updatedProduct = await this.productRepo.save({
+        ...entity,
+        id,
+        pgyProductId: rzpPlan.id,
+      });
 
       // update pricing and terms with the correct productId
       const pricing = entity.pricing.map((p) => ({

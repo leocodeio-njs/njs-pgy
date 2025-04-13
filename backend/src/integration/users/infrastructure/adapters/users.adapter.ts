@@ -42,12 +42,12 @@ export class UserRepositoryAdapter implements IUsersPort {
 
   async findByIntegrationUserId(
     integrationUserId: string,
-  ): Promise<IIntegrationUser[]> {
-    const entities = await this.userRepo.find({
+  ): Promise<IIntegrationUser> {
+    const entity = await this.userRepo.findOne({
       where: { integrationUserId },
       withDeleted: false,
     });
-    return entities.map((e) => this.toDomain(e));
+    return entity ? this.toDomain(entity) : null;
   }
 
   async save(user: IIntegrationUser): Promise<IIntegrationUser> {

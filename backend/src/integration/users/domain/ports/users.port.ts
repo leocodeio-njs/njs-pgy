@@ -6,7 +6,7 @@ export abstract class IUsersPort {
   abstract findByCustomerId(customerId: string): Promise<IIntegrationUser[]>;
   abstract findByIntegrationUserId(
     integrationUserId: string,
-  ): Promise<IIntegrationUser[]>;
+  ): Promise<IIntegrationUser>;
   abstract save(user: IIntegrationUser): Promise<IIntegrationUser>;
   abstract delete(id: string): Promise<void>;
   abstract update(id: string, user: IIntegrationUser): Promise<void>;

@@ -1,10 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { ISubscriptionsPort } from '../../domain/ports/subscriptions.port';
 import { IIntegrationSubscription } from '../../domain/models/subscriptions.model';
 import { IntegrationSubscription } from '../entities/subscriptions.entity';
 import { IntegrationSubscriptionAuditLog } from '../entities/subscriptions-log.entity';
+import { CreateSubscriptionDto } from '@/modules/razorpay/subscriptions/application/dtos/create-subscription.dto';
+// import { UpdateSubscriptionDto } from '@/modules/razorpay/subscriptions/application/dtos/update-subscription.dto';
+import { CancelSubscriptionDto } from '@/modules/razorpay/subscriptions/application/dtos/cancel-subscription.dto';
+import { IntegrationProductsService } from '@/integration/products/application/services/products.service';
+import { SubscriptionsService } from '@/modules/razorpay/subscriptions/application/services/subscriptions.service';
+import { CustomersService } from '@/modules/razorpay/customers/application/services/customers.service';
+import { IntegrationUsersService } from '@/integration/users/application/services/users.service';
+import { CreateCustomerDto } from '@/modules/razorpay/customers/application/dtos/create-customer.dto';
+import { IntegrationUser } from '@/integration/users/infrastructure/entities/users.entity';
 
 @Injectable()
 export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
@@ -15,6 +24,10 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
     private readonly subscriptionRepo: Repository<IntegrationSubscription>,
     @Inject('IntegrationSubscriptionAuditLogRepository')
     private readonly auditRepo: Repository<IntegrationSubscriptionAuditLog>,
+    private readonly productService: IntegrationProductsService,
+    private readonly rzpSubscriptionsService: SubscriptionsService,
+    private readonly customerService: CustomersService,
+    private readonly IntUserService: IntegrationUsersService,
   ) {}
 
   async findAll(): Promise<IIntegrationSubscription[]> {
@@ -40,7 +53,62 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
     await queryRunner.startTransaction();
 
     try {
+      // customer should be created first
+      let customerId: string;
+      const user = await this.IntUserService.findByIntegrationUserId(
+        subscription.integrationUserId,
+      );
+      if (!user) {
+        // Get user from auth table
+        const authUser = await this.dataSource.query(
+          'SELECT * FROM auth.users WHERE id = $1',
+          [subscription.integrationUserId],
+        );
+
+        // Create customer in razorpay
+        const customerData = new CreateCustomerDto();
+        customerData.name = authUser.first_name + ' ' + authUser.last_name;
+        customerData.email = authUser.email;
+        customerData.contact = authUser.mobile;
+        const customer =
+          await this.customerService.createCustomer(customerData);
+
+        // create a record in the integration_users table
+        const integrationUser = new IntegrationUser();
+        integrationUser.name = authUser.firstName + ' ' + authUser.lastName;
+        integrationUser.email = authUser.email;
+        integrationUser.phone = authUser.mobile;
+        if (customer instanceof HttpException) {
+          throw customer;
+        }
+        integrationUser.customerId = customer.id;
+        await this.IntUserService.save(integrationUser);
+        // set the customer id
+        customerId = customer.id;
+      } else {
+        // set the customer id
+        customerId = user.customerId;
+      }
+
+      // create new rzp subscription
+      const createSubscriptionDto = new CreateSubscriptionDto();
+      createSubscriptionDto.customer_id = customerId;
+      createSubscriptionDto.plan_id = subscription.planId;
+      // get the product to get the subscription terms
+      const product = await this.productService.findByPlanId(
+        subscription.planId,
+      );
+      createSubscriptionDto.total_count =
+        product.getSubscriptionTerms()[0].termPeriod;
+
+      const rzpSubscription =
+        await this.rzpSubscriptionsService.createSubscription(
+          createSubscriptionDto,
+        );
+
       const entity = this.toEntity(subscription);
+      // set the pgy subscription id
+      entity.pgySubscriptionId = rzpSubscription.id;
       const savedSubscription = await this.subscriptionRepo.save(entity);
 
       // Log the creation in audit
@@ -72,7 +140,14 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
     await queryRunner.startTransaction();
 
     try {
+      // find the old subscription
       const oldSubscription = await this.findById(id);
+      if (!oldSubscription) {
+        throw new Error('Subscription not found');
+      }
+
+      // [TODO] to update subscription, we need to call the rzp service
+
       const entity = this.toEntity(subscription);
 
       // Update subscription
@@ -114,6 +189,16 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
 
       // Delete subscription
       await this.subscriptionRepo.delete({ id });
+
+      // [TODO] to cancel subscription, we need to call the rzp service
+      const cancelSubscriptionDto = new CancelSubscriptionDto();
+
+      // cancel at cycle end or not should be decided
+      cancelSubscriptionDto.cancel_at_cycle_end = 1;
+      await this.rzpSubscriptionsService.cancelSubscription(
+        oldSubscription.pgySubscriptionId,
+        cancelSubscriptionDto,
+      );
 
       // Log the deletion in audit
       await this.auditRepo.save({
@@ -227,7 +312,6 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
   private toEntity(domain: IIntegrationSubscription): any {
     return {
       id: crypto.randomUUID(),
-      customerId: domain.customerId,
       planId: domain.planId,
       integrationProductId: domain.integrationProductId,
       pgySubscriptionId: domain.pgySubscriptionId,

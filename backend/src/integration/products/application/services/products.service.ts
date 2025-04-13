@@ -11,7 +11,6 @@ import { PricingTier } from '../../domain/models/product-pricing.model';
 import {
   SubscriptionTerms,
   TermUnit,
-  BillingFrequency,
 } from '../../domain/models/subscription-terms.model';
 import { PlanPeriod } from '@/modules/razorpay/plans/application/types/plan.types';
 @Injectable()
@@ -95,6 +94,10 @@ export class IntegrationProductsService {
       });
       throw error;
     }
+  }
+
+  async findByPlanId(planId: string): Promise<IIntegrationProduct> {
+    return this.productPort.findByPlanId(planId);
   }
 
   async update(

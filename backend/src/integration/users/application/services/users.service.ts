@@ -21,7 +21,7 @@ export class IntegrationUsersService {
 
   async findByIntegrationUserId(
     integrationUserId: string,
-  ): Promise<IIntegrationUser[]> {
+  ): Promise<IIntegrationUser> {
     return this.usersPort.findByIntegrationUserId(integrationUserId);
   }
 
