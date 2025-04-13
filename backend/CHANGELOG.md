@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.9.0...v1.9.1) (2025-04-13)
+
+
+### Performance Improvements
+
+* **products  working:** checkpoint products  working ([36303f0](https://github.com/leocodeio-njs/njs-pgy/commit/36303f05f145d51c65eaa7d1d59cbfd9656fc2e0))
+
 # [1.9.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.8.0...v1.9.0) (2025-04-13)
 
 
