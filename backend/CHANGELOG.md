@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.7.1...v1.7.2) (2025-04-13)
+
+
+### Bug Fixes
+
+* **updated providers:** updated providers ([6b34f14](https://github.com/leocodeio-njs/njs-pgy/commit/6b34f14f54376f66c35bd4a3891c40752ee9fe09))
+
 ## [1.7.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.7.0...v1.7.1) (2025-04-13)
 
 
