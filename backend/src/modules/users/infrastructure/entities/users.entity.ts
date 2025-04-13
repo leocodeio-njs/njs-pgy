@@ -20,12 +20,12 @@ export class IntegrationUser {
   @Column()
   customerId: string;
 
-  @Column()
+  @Column({ default: new Date() })
   createdAt: Date;
 
-  @Column()
+  @Column({ default: new Date() })
   updatedAt: Date;
 
-  @Column()
-  deletedAt: Date;
+  @Column({ nullable: true })
+  deletedAt: Date | null;
 }

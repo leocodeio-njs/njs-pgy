@@ -9,7 +9,8 @@ import {
 } from '@nestjs/common';
 import { IntegrationSubscriptionsService } from '../../application/services/subscriptions.service';
 import { IIntegrationSubscription } from '../../domain/models/subscriptions.model';
-import { CreateSubscriptionDto } from '../../application/dtos/create-subscription.dto';
+import { CreateIntegrationSubscriptionDto } from '../../application/dtos/create-subscription.dto';
+import { UpdateIntegrationSubscriptionDto } from '../../application/dtos/update-subscription.dto';
 
 @Controller('subscriptions')
 export class IntegrationSubscriptionsController {
@@ -29,7 +30,7 @@ export class IntegrationSubscriptionsController {
 
   @Post()
   async create(
-    @Body() subscription: CreateSubscriptionDto,
+    @Body() subscription: CreateIntegrationSubscriptionDto,
   ): Promise<IIntegrationSubscription> {
     return this.subscriptionsService.save(subscription);
   }
@@ -37,7 +38,7 @@ export class IntegrationSubscriptionsController {
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() subscription: IIntegrationSubscription,
+    @Body() subscription: UpdateIntegrationSubscriptionDto,
   ): Promise<IIntegrationSubscription> {
     return this.subscriptionsService.update(id, subscription);
   }

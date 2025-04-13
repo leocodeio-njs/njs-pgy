@@ -52,8 +52,8 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
+    const manager = queryRunner.manager;
     try {
-      const manager = queryRunner.manager;
       // customer should be created first
       let customerId: string;
       const user = await this.IntUserService.findByIntegrationUserId(
@@ -63,40 +63,49 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
       if (!user) {
         // Get user from auth table
         const authUser = await manager.query(
-          'SELECT * FROM auth.users WHERE id = $1',
+          'SELECT * FROM auth.users WHERE id = $1 LIMIT 1', // only one match
           [subscription.integrationUserId],
         );
-
+        const authenticUser = authUser[0];
+        if (!authUser) {
+          throw new Error('User not found');
+        }
         // Create customer in razorpay
         const customerData = new CreateCustomerDto();
-        customerData.name = authUser.first_name + ' ' + authUser.last_name;
-        customerData.email = authUser.email;
-        customerData.contact = authUser.mobile;
+        customerData.name =
+          authenticUser.firstName + ' ' + authenticUser.lastName;
+        customerData.email = authenticUser.email;
+        customerData.contact = authenticUser.mobile;
         const customer =
           await this.customerService.createCustomer(customerData);
 
         // create a record in the integration_users table
-        const integrationUser = new IntegrationUser();
-        integrationUser.name = authUser.firstName + ' ' + authUser.lastName;
-        integrationUser.email = authUser.email;
-        integrationUser.phone = authUser.mobile;
+        const integrationUserData = new IntegrationUser();
+        integrationUserData.name =
+          authenticUser.firstName + ' ' + authenticUser.lastName;
+        integrationUserData.email = authenticUser.email;
+        integrationUserData.phone = authenticUser.mobile;
         if (customer instanceof HttpException) {
           throw customer;
         }
-        integrationUser.customerId = customer.id;
-        await manager.save(IntegrationUser, integrationUser);
+        integrationUserData.customerId = customer.id;
+        integrationUserData.integrationUserId = subscription.integrationUserId;
+        await manager.save(IntegrationUser, integrationUserData);
         customerId = customer.id;
       } else {
         customerId = user.customerId;
       }
-
+      console.log('newly created customer id', customerId);
       // create new rzp subscription
       const createSubscriptionDto = new CreateSubscriptionDto();
       createSubscriptionDto.customer_id = customerId;
-      createSubscriptionDto.plan_id = subscription.planId;
-      const product = await this.productService.findByPlanId(
-        subscription.planId,
+      const product = await this.productService.findByIntegrationProductId(
+        subscription.integrationProductId,
       );
+      if (!product) {
+        throw new Error('Product not found');
+      }
+      createSubscriptionDto.plan_id = product.pgyProductId;
       createSubscriptionDto.total_count =
         product.getSubscriptionTerms()[0].termPeriod;
 
@@ -118,7 +127,7 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
       await manager.save(IntegrationSubscriptionAuditLog, {
         subscriptionId: savedSubscription.id,
         action: 'CREATE',
-        oldValue: null,
+        oldValue: {},
         newValue: savedSubscription,
         createdAt: new Date(),
         createdBy: 'system',
@@ -299,10 +308,8 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
 
   private toDomain(entity: IntegrationSubscription): IIntegrationSubscription {
     return new IIntegrationSubscription(
-      entity.customerId,
-      entity.planId,
+      entity.integrationUserId,
       entity.integrationProductId,
-      entity.status,
       entity.pgySubscriptionId,
     );
   }
@@ -310,10 +317,9 @@ export class SubscriptionRepositoryAdapter implements ISubscriptionsPort {
   private toEntity(domain: IIntegrationSubscription): any {
     return {
       id: crypto.randomUUID(),
-      planId: domain.planId,
+      integrationUserId: domain.integrationUserId,
       integrationProductId: domain.integrationProductId,
       pgySubscriptionId: domain.pgySubscriptionId,
-      status: domain.status,
       createdAt: new Date(),
       updatedAt: new Date(),
       deletedAt: null,

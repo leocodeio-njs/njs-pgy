@@ -10,6 +10,9 @@ export abstract class IProductsPort {
     product: IIntegrationProduct,
   ): Promise<IIntegrationProduct>;
   abstract findByPlanId(planId: string): Promise<IIntegrationProduct | null>;
+  abstract findByIntegrationProductId(
+    integrationProductId: string,
+  ): Promise<IIntegrationProduct | null>;
   abstract softDelete(id: string): Promise<void>;
   abstract delete(id: string): Promise<void>;
 }

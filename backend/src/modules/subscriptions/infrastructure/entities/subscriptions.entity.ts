@@ -6,26 +6,15 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { IntegrationProduct } from '@/modules/products/infrastructure/entities/products.entity';
+import { IntegrationUser } from '@/modules/users/infrastructure/entities/users.entity';
 
 @Entity('integration_subscriptions')
 export class IntegrationSubscription {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column('uuid', { name: 'customer_id' })
-  customerId: string;
-
-  @Column('uuid', { name: 'plan_id' })
-  planId: string;
-
-  @Column('timestamp with time zone', { name: 'created_at' })
-  createdAt: Date;
-
-  @Column('timestamp with time zone', { name: 'updated_at' })
-  updatedAt: Date;
-
-  @Column('timestamp with time zone', { name: 'deleted_at' })
-  deletedAt: Date;
+  
+  @Column('uuid', { name: 'user_id' })
+  integrationUserId: string;
 
   @ManyToOne(() => IntegrationProduct, (product) => product.subscriptionTerms)
   @JoinColumn({ name: 'product_id' })
@@ -36,9 +25,28 @@ export class IntegrationSubscription {
   integrationProductId: string;
   // For now should get total_count =  time period * billing frequency
 
-  @Column('varchar', { name: 'status' })
+  @Column('varchar', { name: 'status', default: 'CREATED' })
   status: string;
 
   @Column('varchar', { name: 'pgy_subscription_id' })
   pgySubscriptionId: string;
+
+  @Column('timestamp with time zone', {
+    name: 'created_at',
+    default: new Date(),
+  })
+  createdAt: Date;
+
+  @Column('timestamp with time zone', {
+    name: 'updated_at',
+    default: new Date(),
+  })
+  updatedAt: Date;
+
+  @Column('timestamp with time zone', {
+    name: 'deleted_at',
+    nullable: true,
+    default: null,
+  })
+  deletedAt: Date | null;
 }

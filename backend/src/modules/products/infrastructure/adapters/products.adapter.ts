@@ -57,6 +57,17 @@ export class ProductRepositoryAdapter implements IProductsPort {
     return entity ? this.toDomain(entity) : null;
   }
 
+  async findByIntegrationProductId(
+    integrationProductId: string,
+  ): Promise<IIntegrationProduct | null> {
+    const entity = await this.productRepo.findOne({
+      where: { id: integrationProductId },
+      relations: ['pricing', 'subscriptionTerms'],
+      withDeleted: false,
+    });
+    return entity ? this.toDomain(entity) : null;
+  }
+
   async findValidProducts(date: Date): Promise<IIntegrationProduct[]> {
     const entities = await this.productRepo
       .createQueryBuilder('product')
@@ -324,6 +335,7 @@ export class ProductRepositoryAdapter implements IProductsPort {
       pricing,
       terms,
       entity.deletedAt,
+      entity.pgyProductId,
     );
 
     if (entity.deletedAt) {

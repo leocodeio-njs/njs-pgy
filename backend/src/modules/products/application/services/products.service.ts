@@ -100,6 +100,11 @@ export class IntegrationProductsService {
     return this.productPort.findByPlanId(planId);
   }
 
+  async findByIntegrationProductId(
+    integrationProductId: string,
+  ): Promise<IIntegrationProduct> {
+    return this.productPort.findByIntegrationProductId(integrationProductId);
+  }
   async update(
     id: string,
     updateProductDto: UpdateProductDto,
