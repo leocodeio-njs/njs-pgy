@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.7.2...v1.8.0) (2025-04-13)
+
+
+### Features
+
+* **query runner updated:** query runner updated ([0153ecb](https://github.com/leocodeio-njs/njs-pgy/commit/0153ecbac1025c0e9e9e4586873b13574fad639c))
+
 ## [1.7.2](https://github.com/leocodeio-njs/njs-pgy/compare/v1.7.1...v1.7.2) (2025-04-13)
 
 
