@@ -13,6 +13,9 @@ export abstract class IProductsPort {
   abstract findByIntegrationProductId(
     integrationProductId: string,
   ): Promise<IIntegrationProduct | null>;
+  abstract findByProductName(
+    name: string,
+  ): Promise<IIntegrationProduct | null>;
   abstract softDelete(id: string): Promise<void>;
   abstract delete(id: string): Promise<void>;
 }

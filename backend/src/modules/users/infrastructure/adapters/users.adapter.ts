@@ -56,17 +56,19 @@ export class UserRepositoryAdapter implements IUsersPort {
     await queryRunner.startTransaction();
 
     try {
+      // Check if user already exists
+      const manager = queryRunner.manager;
       const entity = this.toEntity(user);
-      const savedUser = await this.userRepo.save(entity);
+      const savedUser = await manager.save(IntegrationUser, entity);
 
       // Add audit log for creation
-      await this.auditRepo.save({
+      await manager.save(IntegrationUserAuditLog, {
         userId: savedUser.id,
         action: 'CREATE',
-        oldValue: null,
+        oldValue: {},
         newValue: savedUser,
         createdAt: new Date(),
-        createdBy: 'system', // Replace with actual user ID from context
+        createdBy: 'system',
       });
 
       await queryRunner.commitTransaction();
@@ -96,7 +98,7 @@ export class UserRepositoryAdapter implements IUsersPort {
         oldValue: oldUser,
         newValue: updatedUser,
         createdAt: new Date(),
-        createdBy: 'system', // Replace with actual user ID from context
+        createdBy: 'system',
       });
 
       await queryRunner.commitTransaction();

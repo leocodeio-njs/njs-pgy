@@ -6,6 +6,7 @@ import {
   Body,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { IntegrationProductsService } from '../../application/services/products.service';
 import { IIntegrationProduct } from '../../domain/models/products.model';
@@ -15,6 +16,11 @@ import { UpdateProductDto } from '../../application/dtos/update-product.dto';
 @Controller('products')
 export class IntegrationProductsController {
   constructor(private readonly productsService: IntegrationProductsService) {}
+
+  @Get('valid')
+  async getValidProducts(@Query('date') date: string) {
+    return await this.productsService.findValidProducts(new Date(date));
+  }
 
   @Get()
   async findAll(): Promise<IIntegrationProduct[]> {

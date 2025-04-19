@@ -105,6 +105,13 @@ export class IntegrationProductsService {
   ): Promise<IIntegrationProduct> {
     return this.productPort.findByIntegrationProductId(integrationProductId);
   }
+
+  async findByProductName(
+    name: string,
+  ): Promise<IIntegrationProduct> {
+    return this.productPort.findByProductName(name);
+  }
+
   async update(
     id: string,
     updateProductDto: UpdateProductDto,

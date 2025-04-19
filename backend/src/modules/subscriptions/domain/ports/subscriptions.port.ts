@@ -11,6 +11,10 @@ export abstract class ISubscriptionsPort {
     subscription: IIntegrationSubscription,
   ): Promise<IIntegrationSubscription>;
   abstract cancel(id: string): Promise<void>;
-  abstract getInvoices(id: string): Promise<any>;
+  abstract getInvoices(userId: string): Promise<any>;
+  abstract getCurrent(userId: string): Promise<string>;
+  abstract verifySubscription(
+    rzpSubscriptionId: string,
+  ): Promise<IIntegrationSubscription>;
   // [TODO] work on offers
 }

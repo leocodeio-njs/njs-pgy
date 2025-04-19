@@ -291,6 +291,15 @@ export class ProductRepositoryAdapter implements IProductsPort {
     }
   }
 
+  async findByProductName(name: string): Promise<IIntegrationProduct | null> {
+    const entity = await this.productRepo.findOne({
+      where: { name },
+      relations: ['pricing', 'subscriptionTerms'],
+      withDeleted: false,
+    });
+    return entity ? this.toDomain(entity) : null;
+  }
+
   // Update toEntity and toDomain methods to handle deletedAt
   private toDomain(entity: any): IIntegrationProduct {
     const pricing = entity.pricing?.map(

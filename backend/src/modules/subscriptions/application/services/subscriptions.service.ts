@@ -31,7 +31,17 @@ export class IntegrationSubscriptionsService implements ISubscriptionsPort {
     return this.subscriptionsPort.cancel(id);
   }
 
-  async getInvoices(id: string): Promise<any> {
-    return this.subscriptionsPort.getInvoices(id);
+  async getInvoices(userId: string): Promise<any> {
+    return this.subscriptionsPort.getInvoices(userId);
+  }
+
+  async getCurrent(userId: string): Promise<string> {
+    return this.subscriptionsPort.getCurrent(userId);
+  }
+
+  async verifySubscription(
+    subscriptionId: string,
+  ): Promise<IIntegrationSubscription> {
+    return this.subscriptionsPort.verifySubscription(subscriptionId);
   }
 }

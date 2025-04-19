@@ -13,4 +13,9 @@ export class CreateSubscriptionDto {
   @ApiProperty({ example: 'cust_QFQJWwHlLudxtF' })
   @IsString()
   customer_id: string;
+
+  @ApiProperty({ example: Math.floor(Date.now() / 1000) })
+  @IsOptional()
+  @IsNumber()
+  start_at?: number;
 }

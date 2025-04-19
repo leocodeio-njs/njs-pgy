@@ -48,8 +48,27 @@ export class IntegrationSubscriptionsController {
     return this.subscriptionsService.cancel(id);
   }
 
-  @Get(':id/invoices')
-  async getInvoices(@Param('id') id: string): Promise<any> {
-    return this.subscriptionsService.getInvoices(id);
+  @Get(':userId/invoices')
+  async getInvoices(@Param('userId') userId: string): Promise<any> {
+    return this.subscriptionsService.getInvoices(userId);
+  }
+
+  @Get('getCurrent/:userId')
+  async getCurrent(@Param('userId') userId: string): Promise<string> {
+    return this.subscriptionsService.getCurrent(userId);
+  }
+
+  @Get('verify/:rzpSubscriptionId')
+  async verifySubscription(
+    @Param('rzpSubscriptionId') rzpSubscriptionId: string,
+  ): Promise<IIntegrationSubscription> {
+    return this.subscriptionsService.verifySubscription(rzpSubscriptionId);
+  }
+
+  @Post('cancel')
+  async cancelSubscription(
+    @Param('subscriptionId') subscriptionId: string,
+  ): Promise<void> {
+    return this.subscriptionsService.cancel(subscriptionId);
   }
 }
