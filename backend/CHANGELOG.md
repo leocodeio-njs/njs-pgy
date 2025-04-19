@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/leocodeio-njs/njs-pgy/compare/v1.10.0...v1.10.1) (2025-04-19)
+
+
+### Performance Improvements
+
+* **updated implementations:** updated implementations ([ef7465b](https://github.com/leocodeio-njs/njs-pgy/commit/ef7465b1a57828dedbb7fb0d6d6a99999bae38de))
+
 # [1.10.0](https://github.com/leocodeio-njs/njs-pgy/compare/v1.9.1...v1.10.0) (2025-04-13)
 
 
